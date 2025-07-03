@@ -27,16 +27,20 @@ included below:
 | `testing_accuracies_without_ephemeris` | A python list of accurcay scores for each above model, pickled to binary | [link](https://github.com/daraghhollman/messenger-region-classification/blob/main/modelling/train_model.py) |
 | `testing_confusion_matrices_without_ephemeris` | A python list of confusion matrices for each above model, pickled to binary | [link](https://github.com/daraghhollman/messenger-region-classification/blob/main/modelling/train_model.py) |
 
-These files can be automatically installed using [curl](https://curl.se/) by
-running this bash script from the repository base directory (you many need to
-add execution permissions to the script: `chmod +x
-./scripts/download_resources`):
+These files are available on Zenodo
+([doi](https://doi.org/10.5281/zenodo.15797282)) and can be automatically
+installed using [curl](https://curl.se/) by running this bash script from the
+repository base directory (you many need to add execution permissions to the
+script: `chmod +x ./scripts/download_resources`):
 ```shell
 ./scripts/download_resources
 ```
 
 If on Windows, this script can be run using the Git BASH terminal (see [git for
 windows](https://gitforwindows.org/)).
+
+Manual downloading is possible, however the `./resources` directory must be
+created in the repository base directory, and each file must be placed there.
 
 ### Python Environment
 These scripts were written using Python 3.12.8 with the following packages:
@@ -67,7 +71,7 @@ cd hermpy/
 pip install .
 ```
 
-The hermpy package has further set up described in the repository [README](https://github.com/daraghhollman/hermpy/blob/main/README.md)
+The hermpy package requires further set up described in the repository [README](https://github.com/daraghhollman/hermpy/blob/main/README.md)
 
 ## Reproducing Figures
 
