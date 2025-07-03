@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Script to run each figure script
+#
+# Number of processes can be increased by passing a number as an arugment
+# Running on multiple processes is memory limited.
+# With <= 32 GiB RAM, 1 processes is as many as it can handle
+#
+# You may need to give the file execute permisions
+# $ chmod +x ./scripts/run_all
+#
+# You must have set up and sourced a Python environment with the packages
+# described in the README
+
+echo "Running all Python scripts in: $(pwd)/scripts/"
+
+# Check if the number of processes is set
+if [ $# -eq 0 ]; then
+		PROCESSES=1
+else
+		PROCESSES=$1
+		echo "Using $PROCESSES processes"
+fi
+ls ./scripts/*.py | xargs -n 1 -P $PROCESSES python
