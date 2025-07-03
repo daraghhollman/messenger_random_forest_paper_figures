@@ -18,14 +18,13 @@ wong_colours = {
 
 
 # Load crossings
-crossings = pd.read_csv(
-    "/home/daraghhollman/Main/Work/mercury/Code/MESSENGER_Region_Detection/data/new_crossings.csv"
-)
-crossings["Time"] = pd.to_datetime(crossings["Time"])
+crossings = pd.read_csv("./resources/hollman_2025_crossing_list.csv")
+crossings["Time"] = pd.to_datetime(crossings["Times"])
+crossings["Transition"] = crossings["Label"]
 
 # Find the position of each crossing
 # Load full mission data
-full_mission = mag.Load_Mission("/home/daraghhollman/Main/data/mercury/messenger_mag")
+full_mission = mag.Load_Mission("./resources/messenger_mag")
 
 # Add on the columns of full_mission for the rows in crossings
 # Does this using the nearest element
@@ -215,6 +214,6 @@ for i, (axes, positions) in enumerate(
 
 fig.subplots_adjust(left=0.07, top=0.9, bottom=0.1, wspace=0.3, hspace=0.05)
 plt.savefig(
-    "/home/daraghhollman/Main/Work/papers/boundaries/figures/fig12_new_crossing_spatial_spread.pdf",
+    "./figures/fig12_new_crossing_spatial_spread.pdf",
     format="pdf",
 )

@@ -76,15 +76,11 @@ while crossing_index < len(crossing_intervals) - 1:
 
 
 # Load probabilities
-model_output = pd.read_csv(
-    "/home/daraghhollman/Main/Work/mercury/Code/MESSENGER_Region_Detection/data/model_raw_output.csv"
-)
+model_output = pd.read_csv("./resources/model_raw_output.csv")
 model_output["Time"] = pd.to_datetime(model_output["Time"], format="ISO8601")
 
 # Load the new crossing list
-new_crossings = pd.read_csv(
-    "/home/daraghhollman/Main/Work/mercury/Code/MESSENGER_Region_Detection/data/new_crossings.csv"
-)
+new_crossings = pd.read_csv("./resources/new_crossings.csv")
 new_crossings["Time"] = pd.to_datetime(new_crossings["Time"])
 
 # We want to look at a specific crossing group

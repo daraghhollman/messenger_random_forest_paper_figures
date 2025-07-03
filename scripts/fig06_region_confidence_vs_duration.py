@@ -6,9 +6,7 @@ import scipy.optimize
 import scipy.stats
 from hermpy.plotting import wong_colours
 
-regions = pd.read_csv(
-    "/home/daraghhollman/Main/Work/mercury/Code/MESSENGER_Region_Detection/data/new_regions.csv"
-)
+regions = pd.read_csv("./resources/new_regions.csv")
 
 regions = regions.dropna()
 
@@ -77,6 +75,6 @@ ax.set_xlim(0, x_range[-1])
 ax.legend()
 
 plt.savefig(
-    "/home/daraghhollman/Main/Work/papers/boundaries/figures/fig06_region_confidence_vs_duration.pdf",
+    "./figures/fig06_region_confidence_vs_duration.pdf",
     format="pdf",
 )

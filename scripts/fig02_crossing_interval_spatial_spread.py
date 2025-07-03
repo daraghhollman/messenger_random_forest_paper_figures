@@ -26,7 +26,7 @@ crossing_intervals["Mid Time"] = (
     + (crossing_intervals["End Time"] - crossing_intervals["Start Time"]) / 2
 )
 
-full_mission = mag.Load_Mission("/home/daraghhollman/Main/data/mercury/messenger_mag")
+full_mission = mag.Load_Mission("./resources/messenger_mag")
 crossing_intervals = pd.merge_asof(
     crossing_intervals,
     full_mission,
@@ -225,6 +225,6 @@ for i, (axes, positions) in enumerate(
 
 fig.subplots_adjust(left=0.07, top=0.9, bottom=0.1, wspace=0.3, hspace=0.05)
 plt.savefig(
-    "/home/daraghhollman/Main/Work/papers/boundaries/figures/fig02_crossing_intervals_spatial_spread.pdf",
+    "./figures/fig02_crossing_intervals_spatial_spread.pdf",
     format="pdf",
 )

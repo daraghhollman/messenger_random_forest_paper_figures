@@ -21,9 +21,7 @@ wong_colours = {
 
 
 # Load crossings
-crossings = pd.read_csv(
-    "/home/daraghhollman/Main/Work/mercury/Code/MESSENGER_Region_Detection/data/hollman_2025_crossing_list.csv"
-)
+crossings = pd.read_csv("./resources/hollman_2025_crossing_list.csv")
 crossings["Time"] = pd.to_datetime(crossings["Times"])
 crossings["Transition"] = crossings["Label"]
 

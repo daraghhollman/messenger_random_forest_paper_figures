@@ -20,9 +20,7 @@ wong_colours = {
 def main():
 
     # Load full mission data
-    full_mission = mag.Load_Mission(
-        "/home/daraghhollman/Main/data/mercury/messenger_mag"
-    )
+    full_mission = mag.Load_Mission("./resources/messenger_mag")
 
     bow_shock_intervals_spread, magnetopause_intervals_spread = get_intervals_spread(
         full_mission
@@ -87,7 +85,7 @@ def main():
     # plt.show()
     plt.tight_layout()
     plt.savefig(
-        "/home/daraghhollman/Main/Work/papers/boundaries/figures/fig13_spatial_difference.pdf",
+        "./figures/fig13_spatial_difference.pdf",
         format="pdf",
     )
 
@@ -182,9 +180,7 @@ def plot_difference(hist_a, hist_b, ax, label_x=False, label_y=False):
 def get_individual_crossing_spread(full_mission):
 
     # Load crossings
-    crossings = pd.read_csv(
-        "/home/daraghhollman/Main/Work/mercury/Code/MESSENGER_Region_Detection/data/hollman_2025_crossing_list.csv"
-    )
+    crossings = pd.read_csv("./resources/hollman_2025_crossing_list.csv")
     crossings["Time"] = pd.to_datetime(crossings["Times"])
 
     # Find the position of each crossing

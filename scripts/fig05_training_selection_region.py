@@ -225,6 +225,6 @@ lines = [
 
 plt.tight_layout()
 plt.savefig(
-    "/home/daraghhollman/Main/Work/papers/boundaries/figures/fig05_training_selection_region.pdf",
+    "./figures/fig05_training_selection_region.pdf",
     format="pdf",
 )
