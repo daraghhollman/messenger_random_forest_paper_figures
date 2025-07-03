@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# If resources directory doesn't exist, create it
+if [ ! -d ./resources ]; then
+		mkdir ./resources
+fi
+
+# Download Files
+curl 'https://zenodo.org/records/15797283/files/hollman_2025_crossing_list.csv?download=1' > ./resources/hollman_2025_crossing_list.csv
+curl 'https://zenodo.org/records/15797283/files/messenger_mag?download=1' > ./resources/messenger_mag
+curl 'https://zenodo.org/records/15797283/files/model_raw_output.csv?download=1' > ./resources/model_raw_output.csv
+curl 'https://zenodo.org/records/15797283/files/models?download=1' > .resources/models
+curl 'https://zenodo.org/records/15797283/files/models_without_ephemeris?download=1' > .resources/models_without_ephemeris
+curl 'https://zenodo.org/records/15797283/files/new_crossings.csv?download=1' > ./resources/new_crossings.csv
+curl 'https://zenodo.org/records/15797283/files/new_regions.csv?download=1' > ./resources/new_regions.csv
+curl 'https://zenodo.org/records/15797283/files/testing_accuracies?download=1' > ./resources/testing_accuracies
+curl 'https://zenodo.org/records/15797283/files/testing_accuracies_without_ephemeris?download=1' > ./resources/testing_accuracies_without_ephemeris
+curl 'https://zenodo.org/records/15797283/files/testing_confusion_matrices?download=1' > ./resources/testing_confusion_matrrices
+curl 'https://zenodo.org/records/15797283/files/testing_confusion_matrices_without_ephemeris?download=1' > ./resources/testing_confusion_matrices_without_ephemeris
