@@ -48,7 +48,7 @@ ax.plot(
     lw=2,
     color=wong_colours["black"],
     label=r"Least Squares Fit: f(x) = $1 - e^{-a(x - b)} + c$"
-    + f",\n    $a = {pars[0]:.4f}$,\n    $b = {pars[1]:.2f}$,\n    $c = {pars[2]:.4f}$",
+    + f"\n    $a = {pars[0]:.4f}$\n    $b = {pars[1]:.2f}$\n    $c = {pars[2]:.4f}$",
 )
 
 ax.axvline(
