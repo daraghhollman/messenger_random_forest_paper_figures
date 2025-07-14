@@ -45,12 +45,18 @@ axes[0].plot(data["date"], data["Bz"], color=wong_colours["blue"], label="$B_z$"
 
 # Add boundary crossing interval
 boundaries.Plot_Crossing_Intervals(
-    axes[0], start_time, end_time, philpott_2020, color=wong_colours["black"], lw=3
+    axes[0],
+    start_time,
+    end_time,
+    philpott_2020,
+    color=wong_colours["black"],
+    lw=3,
+    height=1.1,
 )
 
 
 # Next we do the quasi-parallel case
-start_time = dt.datetime(2013, 4, 28, hour=16, minute=51)
+start_time = dt.datetime(2013, 4, 28, hour=16, minute=50)
 end_time = dt.datetime(2013, 4, 28, hour=17, minute=6)
 
 data = mag.Load_Between_Dates(utils.User.DATA_DIRECTORIES["MAG"], start_time, end_time)
@@ -65,7 +71,13 @@ axes[1].plot(data["date"], data["Bz"], color=wong_colours["blue"], label="$B_z$"
 
 # Add boundary crossing interval
 boundaries.Plot_Crossing_Intervals(
-    axes[1], start_time, end_time, philpott_2020, color=wong_colours["black"], lw=3
+    axes[1],
+    start_time,
+    end_time,
+    philpott_2020,
+    color=wong_colours["black"],
+    lw=3,
+    height=1.1,
 )
 
 # Make legend lines larger
@@ -106,4 +118,4 @@ for ax, l in zip(axes, axis_labels):
 
 plt.tight_layout()
 
-plt.savefig("./figures/fig03_contrasting_bow_shock_examples.pdf", format="pdf")
+plt.savefig("./figures/fig02_contrasting_bow_shock_examples.pdf", format="pdf")

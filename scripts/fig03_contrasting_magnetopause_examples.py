@@ -106,4 +106,4 @@ for ax, l in zip(axes, axis_labels):
 
 plt.tight_layout()
 
-plt.savefig("./figures/fig04_contrasting_magnetopause_examples.pdf", format="pdf")
+plt.savefig("./figures/fig03_contrasting_magnetopause_examples.pdf", format="pdf")

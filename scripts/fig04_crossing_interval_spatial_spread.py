@@ -225,6 +225,6 @@ for i, (axes, positions) in enumerate(
 
 fig.subplots_adjust(left=0.07, top=0.9, bottom=0.1, wspace=0.3, hspace=0.05)
 plt.savefig(
-    "./figures/fig02_crossing_intervals_spatial_spread.pdf",
+    "./figures/fig04_crossing_intervals_spatial_spread.pdf",
     format="pdf",
 )
