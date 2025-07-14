@@ -1,70 +1,112 @@
 import datetime as dt
 
-import matplotlib as mpl
+import matplotlib.patheffects
 import matplotlib.pyplot as plt
+import numpy as np
 import spiceypy as spice
 from hermpy import mag, plotting, utils
+from hermpy.plotting import wong_colours
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 
-wong_colours = {
-    "black": "black",
-    "orange": "#E69F00",
-    "light blue": "#56B4E9",
-    "green": "#009E73",
-    "yellow": "#F0E442",
-    "blue": "#0072B2",
-    "red": "#D55E00",
-    "pink": "#CC79A7",
-}
 wong_colours_list = list(wong_colours.values())
 
-orbits = []
+data = mag.Load_Mission(utils.User.DATA_DIRECTORIES["FULL MISSION"])
+x_positions = data["X MSM' (radii)"]
+y_positions = data["Y MSM' (radii)"]
+z_positions = data["Z MSM' (radii)"]
 
-number_of_orbits = 3
-
-start_times = [
-    dt.datetime(year=2013, month=1, day=1, hour=0) + i * dt.timedelta(days=15)
-    for i in range(number_of_orbits)
+orbits = [
+    {
+        "Name": "Dayside",
+        "Start": dt.datetime(2011, 12, 25, 2),
+        "End": dt.datetime(2011, 12, 25, 14),
+    },
+    {
+        "Name": "Nightside",
+        "Start": dt.datetime(2013, 6, 5, 1),
+        "End": dt.datetime(2013, 6, 5, 9),
+    },
 ]
-end_times = [
-    dt.datetime(year=2013, month=1, day=1, hour=8) + i * dt.timedelta(days=15)
-    for i in range(number_of_orbits)
-]
 
-for start, end in zip(start_times, end_times):
-    orbit_data = mag.Load_Between_Dates(utils.User.DATA_DIRECTORIES["MAG"], start, end)
-
-    orbits.append(orbit_data)
-
+x_bins = np.linspace(-5, 5, 50).tolist()
+z_bins = np.linspace(-8, 2, 50).tolist()
+xy_histogram, x_edges, y_edges = np.histogram2d(
+    x_positions, y_positions, bins=[x_bins, x_bins]
+)
+xz_histogram, x_edges, z_edges = np.histogram2d(
+    x_positions, z_positions, bins=[x_bins, z_bins]
+)
 
 # These positions can then be plotted
-fig, axes = plt.subplots(1, 2, figsize=(10, 6))
+fig, axes = plt.subplots(1, 2, figsize=(8, 4))
 
-for i, data in enumerate(orbits):
-    axes[0].plot(
-        data["X MSM' (radii)"],
-        data["Y MSM' (radii)"],
-        color=wong_colours_list[i + 1],
-        label=f"Orbit on {start_times[i].date()}",
-        zorder=10,
-    )
-    axes[1].plot(
-        data["X MSM' (radii)"],
-        data["Z MSM' (radii)"],
-        color=wong_colours_list[i + 1],
-        zorder=10,
-    )
+xy_mesh = axes[0].pcolormesh(
+    x_edges, y_edges, xy_histogram.T / 3600, norm="log", cmap="binary_r", zorder=-1
+)
+xz_mesh = axes[1].pcolormesh(
+    x_edges, z_edges, xz_histogram.T / 3600, norm="log", cmap="binary_r", zorder=-1
+)
 
-
-axes[0].legend(loc="upper center", bbox_to_anchor=(1.1, 1.2), ncol=3)
+divider = make_axes_locatable(axes[0])
+cax = divider.append_axes("right", size="3%", pad=0.05)
+fig.colorbar(
+    xy_mesh, cax=cax, orientation="vertical", label="MESSENGER Residence [hours]"
+)
+divider = make_axes_locatable(axes[1])
+cax = divider.append_axes("right", size="3%", pad=0.05)
+fig.colorbar(
+    xz_mesh, cax=cax, orientation="vertical", label="MESSENGER Residence [hours]"
+)
 
 planes = ["xy", "xz"]
 hemisphere = ["left", "left"]
 for i, ax in enumerate(axes):
     plotting.Plot_Mercury(
-        axes[i], shaded_hemisphere=hemisphere[i], plane=planes[i], frame="MSM"
+        axes[i], shaded_hemisphere="none", alpha=1, plane=planes[i], frame="MSM"
     )
     plotting.Add_Labels(axes[i], planes[i], frame="MSM'")
     plotting.Plot_Magnetospheric_Boundaries(ax, plane=planes[i])
-    plotting.Square_Axes(ax, 6)
+
+    ax.set_aspect("equal")
+
+    # Set axis background
+    ax.axvspan(*ax.get_xlim(), color="#648FFF", alpha=0.3, zorder=-2)
+
+axes[0].set_xlim(x_bins[0], x_bins[-1])
+axes[0].set_ylim(x_bins[0], x_bins[-1])
+
+axes[1].set_xlim(x_bins[0], x_bins[-1])
+axes[1].set_ylim(z_bins[0], z_bins[-1])
+
+# Add example orbits
+for i, orbit in enumerate(orbits):
+
+    # Limit data to within range
+    orbit_data = data.loc[data["date"].between(orbit["Start"], orbit["End"])]
+    x = orbit_data["X MSM' (radii)"]
+    y = orbit_data["Y MSM' (radii)"]
+    z = orbit_data["Z MSM' (radii)"]
+
+    axes[0].plot(
+        x,
+        y,
+        color=wong_colours_list[1:][i],
+        path_effects=[  # Add a black outline to the line
+            matplotlib.patheffects.Stroke(linewidth=2, foreground="k"),
+            matplotlib.patheffects.Normal(),
+        ],
+    )
+    axes[1].plot(
+        x,
+        z,
+        color=wong_colours_list[1:][i],
+        path_effects=[  # Add a black outline to the line
+            matplotlib.patheffects.Stroke(linewidth=2, foreground="k"),
+            matplotlib.patheffects.Normal(),
+        ],
+    )
+
+
+plt.tight_layout()
 
 plt.savefig("./figures/fig01_trajectories_example.pdf", format="pdf")
