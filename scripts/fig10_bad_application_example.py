@@ -454,5 +454,21 @@ for ax, label in zip(axes, ["(a)", "(b)", "(c)"]):
     )
     panel_label.set_clip_on(False)
 
+"""
+# We want to add X MSM' to the third panel
+feature_axis = probability_axis.twinx()
+
+feature_axis.plot(
+    messenger_data["date"],
+    np.sqrt(
+        messenger_data["Y MSM' (radii)"] ** 2 + messenger_data["Z MSM' (radii)"] ** 2
+    ),
+    color="black",
+    lw=3,
+)
+
+feature_axis.set_ylabel(r"X MSM' [$R_{\rm M}$]")
+"""
+
 plotting.Add_Tick_Ephemeris(probability_axis)
-plt.savefig("./figures/fig11_bad_application_example.pdf", format="pdf")
+plt.savefig("./figures/fig10_bad_application_example.pdf", format="pdf")

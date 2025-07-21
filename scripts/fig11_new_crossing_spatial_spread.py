@@ -62,7 +62,7 @@ residence_cyl, _, _ = np.histogram2d(
     bins=[x_bins, cyl_bins],
 )
 
-fig, axes = plt.subplots(2, 3, figsize=(10, 7))
+fig, axes = plt.subplots(2, 3, figsize=(10.5, 7))
 
 bow_shock_axes = axes[0]
 magnetopause_axes = axes[1]
@@ -194,12 +194,20 @@ for i, (axes, positions) in enumerate(
     label_x_offset = 0.065
 
     if i == 0:
-        cbar.set_label(r"Bow Shock Crossing Rate [$\text{hour}^{-1}$]")
+        cbar.set_label(
+            "Bow Shock Crossings"
+            + r" [$\text{hour}^{-1}$]"
+            + "\n(normalised by residence)"
+        )
         fig.text(0.075, 0.84, "(a)", fontsize=14, transform=fig.transFigure)
         fig.text(0.375, 0.84, "(b)", fontsize=14, transform=fig.transFigure)
         fig.text(0.675, 0.84, "(c)", fontsize=14, transform=fig.transFigure)
     else:
-        cbar.set_label(r"Magnetopause Crossing Rate [$\text{hour}^{-1}$]")
+        cbar.set_label(
+            "Magnetopause Crossings"
+            + r" [$\text{hour}^{-1}$]"
+            + "\n(normalised by residence)"
+        )
         fig.text(0.075, 0.43, "(d)", fontsize=14, transform=fig.transFigure)
         fig.text(0.375, 0.43, "(e)", fontsize=14, transform=fig.transFigure)
         fig.text(0.675, 0.43, "(f)", fontsize=14, transform=fig.transFigure)
@@ -214,6 +222,6 @@ for i, (axes, positions) in enumerate(
 
 fig.subplots_adjust(left=0.07, top=0.9, bottom=0.1, wspace=0.3, hspace=0.05)
 plt.savefig(
-    "./figures/fig12_new_crossing_spatial_spread.pdf",
+    "./figures/fig11_new_crossing_spatial_spread.pdf",
     format="pdf",
 )

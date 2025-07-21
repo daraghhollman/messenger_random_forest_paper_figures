@@ -121,12 +121,12 @@ ax.scatter(
 )
 
 ax.set_xlabel("Heliocentric Distance (AU)")
-ax.set_ylabel("Crossing Denstiy / Philpott Interval Density\n(Black / Orange)")
+ax.set_ylabel("Crossing Denstiy / Philpott Interval Density")
 
 for ax, l in zip(axes, ["(a)", "(b)"]):
     ax.text(-0.05, 1.05, l, transform=ax.transAxes, fontsize="large")
 
-ax.legend()
+ax.legend(loc="upper left")
 
 plt.tight_layout()
-plt.savefig("./figures/fig14_crossing_count_vs_heliocentric_distance.pdf", format="pdf")
+plt.savefig("./figures/fig13_crossing_count_vs_heliocentric_distance.pdf", format="pdf")

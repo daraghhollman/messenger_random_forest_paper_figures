@@ -70,7 +70,7 @@ def main():
     confusion_matrix_std = np.std(testing_confusion_matrices, axis=0)
 
     # Plot the average confusion matrix
-    sns.heatmap(
+    heatmap = sns.heatmap(
         avg_confusion_matrix,
         annot=True,
         fmt=".2f",
@@ -87,6 +87,9 @@ def main():
     axes[1].set_xlabel("Predicted Label")
     axes[1].set_ylabel("True Label")
     axes[1].set_title(f"Confusion Matrix Average for {len(models)} models")
+
+    colorbar = heatmap.collections[0].colorbar
+    colorbar.set_label("Mean Counts")
 
     # Annotate with standard deviation
     for i in range(avg_confusion_matrix.shape[0]):

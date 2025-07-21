@@ -448,4 +448,4 @@ for ax, label in zip(axes, ["(a)", "(b)", "(c)"]):
     panel_label.set_clip_on(False)
 
 plotting.Add_Tick_Ephemeris(probability_axis)
-plt.savefig("./figures/fig10_messy_application_example.pdf", format="pdf")
+plt.savefig("./figures/fig09_messy_application_example.pdf", format="pdf")

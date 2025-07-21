@@ -155,4 +155,4 @@ axes[0].set_title("Philpott+ (2020) Intervals")
 axes[1].set_title("Sun (2023) Intervals")
 
 plt.tight_layout()
-plt.savefig("./figures/fig15_crossing_interval_durations.pdf", format="pdf")
+plt.savefig("./figures/fig14_crossing_interval_durations.pdf", format="pdf")

@@ -56,7 +56,9 @@ msh_sample_data = data.loc[data["date"].between(msh_sample_start, msh_sample_end
 fig = plt.figure(figsize=(8, 8))
 mag_axis = plt.subplot2grid((2, 2), (0, 0), colspan=2)
 left_sample_axis = plt.subplot2grid((2, 2), (1, 0))
-right_sample_axis = plt.subplot2grid((2, 2), (1, 1), sharey=left_sample_axis)
+right_sample_axis = plt.subplot2grid(
+    (2, 2), (1, 1), sharey=left_sample_axis, sharex=left_sample_axis
+)
 
 axes = (mag_axis, left_sample_axis, right_sample_axis)
 
@@ -145,6 +147,8 @@ mag_legend = mag_axis.legend(
 for legobj in mag_legend.legend_handles:
     legobj.set_linewidth(3.0)
 
+bin_size = 5  # nT
+bins = np.arange(-90, 90 + bin_size, bin_size)
 components = ["|B|", "Bx", "By", "Bz"]
 if crossing["Type"] == "BS_IN":
 
@@ -153,13 +157,15 @@ if crossing["Type"] == "BS_IN":
 
     for component, colour in zip(components, colours):
 
-        left_sample_hist, bin_edges = np.histogram(sw_sample_data[component])
+        left_sample_hist, bin_edges = np.histogram(sw_sample_data[component], bins=bins)
         bin_centres = (bin_edges[:-1] + bin_edges[1:]) / 2
         left_sample_axis.stairs(
             left_sample_hist, bin_edges, lw=3, orientation="horizontal", color=colour
         )
 
-        right_sample_hist, bin_edges = np.histogram(msh_sample_data[component])
+        right_sample_hist, bin_edges = np.histogram(
+            msh_sample_data[component], bins=bins
+        )
         bin_centres = (bin_edges[:-1] + bin_edges[1:]) / 2
         right_sample_axis.stairs(
             right_sample_hist, bin_edges, lw=3, orientation="horizontal", color=colour
@@ -171,13 +177,17 @@ else:
 
     for component, colour in zip(components, colours):
 
-        left_sample_hist, bin_edges = np.histogram(msh_sample_data[component])
+        left_sample_hist, bin_edges = np.histogram(
+            msh_sample_data[component], bins=bins
+        )
         bin_centres = (bin_edges[:-1] + bin_edges[1:]) / 2
         left_sample_axis.stairs(
             left_sample_hist, bin_edges, lw=3, orientation="horizontal", color=colour
         )
 
-        right_sample_hist, bin_edges = np.histogram(sw_sample_data[component])
+        right_sample_hist, bin_edges = np.histogram(
+            sw_sample_data[component], bins=bins
+        )
         bin_centres = (bin_edges[:-1] + bin_edges[1:]) / 2
         right_sample_axis.stairs(
             right_sample_hist, bin_edges, lw=3, orientation="horizontal", color=colour
@@ -185,7 +195,6 @@ else:
 
 panel_labels = ["(a)", "(b)", "(c)"]
 for i, ax in enumerate(axes):
-    ax.margins(x=0)
     ax.axhline(0, color="black", ls="dotted")
 
     # Add panel labels
@@ -194,34 +203,13 @@ for i, ax in enumerate(axes):
     # y axes must be symmetric around 0
     ax.set_ylim(-max(np.abs(ax.get_ylim())), max(np.abs(ax.get_ylim())))
 
-right_sample_axis.set_xlabel("Seconds")
-left_sample_axis.set_xlabel("Seconds")
+mag_axis.margins(x=0)
+
+right_sample_axis.set_xlabel("Number of observations within bin")
+left_sample_axis.set_xlabel("Number of observations within bin")
 
 left_sample_axis.set_ylabel("Magnetic Field Strength [nT]")
 mag_axis.set_ylabel("Magnetic Field Strength [nT]")
-
-"""
-# Drawing lines between axes
-sw_top_left_point = (0.58, 0.55)
-sw_bottom_left_point = (0.567, 0.453)
-
-a = 0.4
-sw_top_right_point = (0.54 + a, 0.55)
-sw_bottom_right_point = (0.58 + a, 0.453)
-
-lines = [
-    plt.Line2D(
-        [sw_top_left_point[0], sw_bottom_left_point[0]],
-        [sw_top_left_point[1], sw_bottom_left_point[1]],
-    ),
-    plt.Line2D(
-        [sw_top_right_point[0], sw_bottom_right_point[0]],
-        [sw_top_right_point[1], sw_bottom_right_point[1]],
-    ),
-]
-
-[fig.add_artist(l) for l in lines]
-"""
 
 plt.tight_layout()
 plt.savefig(

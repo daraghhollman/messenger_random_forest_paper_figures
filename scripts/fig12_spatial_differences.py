@@ -85,7 +85,7 @@ def main():
     # plt.show()
     plt.tight_layout()
     plt.savefig(
-        "./figures/fig13_spatial_difference.pdf",
+        "./figures/fig12_spatial_difference.pdf",
         format="pdf",
     )
 
